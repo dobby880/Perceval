@@ -58,7 +58,12 @@ class NaiveBackend(Backend):
                         Ust[rowidx, colidx] = self._U[ok, ik]
                         rowidx += 1
                 colidx += 1
-        return xq.permanent_cx(Ust, n_threads=1)/math.sqrt(p)
+
+        self.Ust = Ust
+        if input_state.is_fully_distinguishable:
+            return np.sqrt(xq.permanent_cx(np.square(np.absolute(Ust)), n_threads=1))/math.sqrt(p)
+        else:
+            return xq.permanent_cx(Ust, n_threads=1)/math.sqrt(p)
 
     def prob_be(self, input_state, output_state):
         return abs(self.probampli_be(input_state, output_state))**2

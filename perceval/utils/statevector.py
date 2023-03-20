@@ -89,6 +89,9 @@ class BasicState(FockState):
     def set_slice(self, slice, state):
         return BasicState(super().set_slice(slice, state))
 
+    is_fully_distinguishable = property(lambda self:
+                                        all(s1.n == 1 for s1 in self.separate_state()) and self.has_annotations)
+
     def partition(self, distribution_photons: List[int]):
         r"""Given a distribution of photon, find all possible partition of the BasicState - disregard possible annotation
 

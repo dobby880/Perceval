@@ -166,7 +166,7 @@ class Backend(ABC):
         if input_state.n == 0:
             return 1 if output_state.n == 0 else 0
         if self._U is None or (not self._requires_polarization and not input_state.has_polarization):
-            if input_state.has_annotations:
+            if input_state.has_annotations and not input_state.is_fully_distinguishable:
                 input_states = input_state.separate_state()
                 all_prob = 0
                 for p_output_state in BasicState(output_state).partition(
